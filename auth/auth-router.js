@@ -2,6 +2,9 @@ const router = require('express').Router()
 const UserDB = require('./auth-modal')
 
 const bcrypt = require('bcryptjs')
+
+
+
 router.post('/register', (req, res) => {
 
 const { username, password } = req.body

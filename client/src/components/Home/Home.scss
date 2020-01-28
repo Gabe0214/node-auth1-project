@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   max-width: 100%;
+}
+
+
+body {
+    line-height: 1.4;
+  
+}
+
+.nav-bar {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+      a {
+          text-decoration: none;
+          color: #333; 
+          padding: 0.5rem 1.2rem; 
+      }
+}
+
+.container {
+    border: 1px black solid;
+    max-width: 1600px;
+    margin: auto; 
+}
