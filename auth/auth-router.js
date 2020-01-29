@@ -32,6 +32,7 @@ router.post('/login', (req, res) => {
        .then(user=> {
         //    console.log(user)
         if(user && bcrypt.compareSync(password, user.password)) {
+            req.session.user = user;
             res.status(200).json({ message: 'You are logged in'})
         }  else {
             res.status(401).json({message: "invalid username and/or password"})
@@ -47,10 +48,11 @@ router.post('/login', (req, res) => {
 
 router.get('/users', restrict, (req, res) => {
     UserDB.get()
-    .then(list => {
-        res.status(201).json(list)
+    .then(users => {
+        res.status(201).json(users)
     })
     .catch(err => {
+        console.log(err)
         res.status(500).json({error: "sorry"})
     })
 })
@@ -59,20 +61,16 @@ router.get('/users', restrict, (req, res) => {
 //middleware 
 
 function restrict(req, res, next){
-    const { username, password } = req.headers
-    UserDB.findByUsername(username)
-    .then( user => {
-        if(user && bcrypt.compareSync(password, user.password)) {
+ 
+        if(req.session && req.session.user) {
+            console.log(req.session)
             next();
         } else {
-            res.status(403).json({message: "Not authorized"})
+            console.log(req.session)
+            res.status(401).json({message: "Not authorized"})
         }
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json({message: "Error registering user"})
-        })
-}
+    }
+   
 
 
 module.exports = router;
